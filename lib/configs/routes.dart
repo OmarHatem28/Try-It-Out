@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:try_it_out/presentation/screens/main_screen.dart';
+import 'package:try_it_out/presentation/screens/result_screen.dart';
+import 'package:try_it_out/presentation/screens/widget_form/center.dart';
+import 'package:try_it_out/presentation/screens/widget_form/container.dart';
 import 'package:try_it_out/presentation/screens/widgets_screen.dart';
 import 'package:try_it_out/services/shared_pref_manager.dart';
 
@@ -8,6 +10,7 @@ class RouteGenerator {
   static const main = "/";
   static const home = "/home";
   static const error = "/error";
+  static const result = "/result";
   static const widgets = "/widgets";
   static const container = "/container";
   static const row = "/row";
@@ -27,7 +30,7 @@ class RouteGenerator {
       case main:
         return MaterialPageRoute(
           settings: const RouteSettings(name: main),
-          builder: (_) => visitedBefore ? const MainScreen() : IntroductionScreen(),
+          builder: (_) => visitedBefore ? const MainScreen() : const MainScreen(),
         );
 
       case home:
@@ -36,10 +39,28 @@ class RouteGenerator {
           builder: (_) => const MainScreen(),
         );
 
+      case result:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: result),
+          builder: (_) => ResultScreen(args["tWidget"]),
+        );
+
       case widgets:
         return MaterialPageRoute(
           settings: const RouteSettings(name: widgets),
           builder: (_) => WidgetsScreen(args['parent']),
+        );
+
+      case container:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: container),
+          builder: (_) => TContainerForm(args['parent']),
+        );
+
+      case center:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: center),
+          builder: (_) => TCenterForm(args['parent']),
         );
 
       default:

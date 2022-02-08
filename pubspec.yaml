@@ -39,8 +39,6 @@ dependencies:
   flutter_svg: ^1.0.3
   # For Introduction Screen
   introduction_screen: ^2.1.0
-  # For Neumorphic effect
-  flutter_neumorphic: ^3.2.0
 
   #------------------------------------------------------
   ### Coding

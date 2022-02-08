@@ -23,27 +23,27 @@ class ConstValues {
     WidgetModel(
       name: ConstStrings.container,
       icon: ConstAssets.container,
-      route: RouteGenerator.container
+      route: RouteGenerator.container,
     ),
     WidgetModel(
       name: ConstStrings.row,
       icon: ConstAssets.row,
-      route: RouteGenerator.row
+      route: RouteGenerator.row,
     ),
     WidgetModel(
       name: ConstStrings.column,
       icon: ConstAssets.column,
-      route: RouteGenerator.column
+      route: RouteGenerator.column,
     ),
     WidgetModel(
       name: ConstStrings.center,
       icon: ConstAssets.center,
-      route: RouteGenerator.center
+      route: RouteGenerator.center,
     ),
     WidgetModel(
       name: ConstStrings.stack,
       icon: ConstAssets.stack,
-      route: RouteGenerator.stack
+      route: RouteGenerator.stack,
     ),
   ];
 }

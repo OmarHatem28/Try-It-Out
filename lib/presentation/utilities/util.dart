@@ -25,5 +25,5 @@ void handleException<T>({
   StackTrace? stackTrace,
   String errorType = "Error",
 }) {
-  logger.e("$errorType in ${failureClass?.runtimeType ?? "main"}: ${exception.toString()}");
+  logger.e("$errorType in ${failureClass?.runtimeType ?? "main"}: ${exception.toString()}\n\nStack Trace:\n$stackTrace");
 }

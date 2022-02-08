@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:try_it_out/configs/constants.dart';
 import 'package:try_it_out/models/t_widget.dart';
 
@@ -11,7 +10,7 @@ class WidgetsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NeumorphicAppBar(
+      appBar: AppBar(
         title: Text(
           parent?.name != null ? "${parent!.name}'s child" : "Starting Point",
         ),
@@ -25,22 +24,19 @@ class WidgetsScreen extends StatelessWidget {
         itemCount: ConstValues.widgets.length,
         itemBuilder: (context, i) {
           return InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, ConstValues.widgets[i].route);
+            onTap: () async {
+              var x = await Navigator.pushNamed(context, ConstValues.widgets[i].route);
+
+              Navigator.pop(context, x);
             },
-            child: Neumorphic(
-              style: NeumorphicStyle(
-                  shape: NeumorphicShape.concave,
-                  boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                  depth: 8,
-                  lightSource: LightSource.topLeft,
-                  color: Colors.grey
-              ),
-              child: Column(
-                children: [
-                  const Icon(Icons.home),
-                  Text(ConstValues.widgets[i].name),
-                ],
+            child: Card(
+              child: Center(
+                child: Column(
+                  children: [
+                    const Icon(Icons.home),
+                    Text(ConstValues.widgets[i].name),
+                  ],
+                ),
               ),
             ),
           );

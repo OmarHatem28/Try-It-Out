@@ -19,7 +19,7 @@ class RouteGenerator {
   static const stack = "/stack";
 
   static Route<dynamic> generateRoute(RouteSettings? settings) {
-    Map<String, dynamic> args = settings?.arguments != null ? (settings!.arguments as Map<String, dynamic>) : Map();
+    Map<String, dynamic> args = settings?.arguments != null ? (settings!.arguments as Map<String, dynamic>) : {};
 
     String name = settings != null ? settings.name ?? '' : '';
 
@@ -54,13 +54,13 @@ class RouteGenerator {
       case container:
         return MaterialPageRoute(
           settings: const RouteSettings(name: container),
-          builder: (_) => const TContainerForm(),
+          builder: (_) => TContainerForm(args["oldState"]),
         );
 
       case center:
         return MaterialPageRoute(
           settings: const RouteSettings(name: center),
-          builder: (_) => const TCenterForm(),
+          builder: (_) => TCenterForm(args["oldState"]),
         );
 
       default:

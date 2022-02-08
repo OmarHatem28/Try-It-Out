@@ -64,10 +64,9 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
   void getWidgets(TWidget? tWidget) {
     if (tWidget == null) return;
 
-    children.add(widgetCard(tWidget.name));
+    children.add(widgetCard(tWidget));
     children.add(const SizedBox(
       height: 20,
-      width: 10,
       child: VerticalDivider(thickness: 1),
     ));
 
@@ -75,41 +74,31 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
       return getWidgets(tWidget.child);
     }
     if (tWidget is MultipleChildrenWidget) {
+      if (tWidget.children?.isEmpty ?? true) return;
       children.add(SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children:
-              tWidget.children?.map((e) => widgetCard(e.name)).toList() ?? [])));
-      if (tWidget.children?.isEmpty ?? true) return;
+              children: tWidget.children!.map((e) => widgetCard(e)).toList())));
       return getWidgets(tWidget.children!.first);
-    }
-
-
-    switch (tWidget.runtimeType) {
-      case SingleChildWidget:
-        return getWidgets((tWidget as SingleChildWidget).child);
-      case MultipleChildrenWidget:
-        children.add(SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children:
-                    (tWidget as MultipleChildrenWidget).children?.map((e) => widgetCard(e.name)).toList() ?? [])));
-        if (tWidget.children?.isEmpty ?? true) return;
-        return getWidgets(tWidget.children!.first);
     }
   }
 
-  Widget widgetCard(String name) {
+  Widget widgetCard(TWidget tWidget) {
     return ElevatedButton(
-      onPressed: () {
-        debugPrint(name);
+      onPressed: () async {
+        debugPrint(tWidget.name);
+        var x = await Navigator.pushNamed(context, tWidget.route, arguments: {"oldState": tWidget});
+
+        if (x != null) {
+          print(x);
+          print(x.runtimeType);
+        }
       },
       child: Column(
         children: [
           const Icon(Icons.home),
-          Text(name),
+          Text(tWidget.name),
         ],
       ),
     );

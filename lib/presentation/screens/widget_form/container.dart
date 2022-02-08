@@ -5,7 +5,9 @@ import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/models/widget_model/t_container.dart';
 
 class TContainerForm extends StatefulWidget {
-  const TContainerForm({Key? key}) : super(key: key);
+  final TContainer? oldState;
+
+  const TContainerForm(this.oldState, {Key? key}) : super(key: key);
 
   @override
   _TContainerFormState createState() => _TContainerFormState();
@@ -13,12 +15,20 @@ class TContainerForm extends StatefulWidget {
 
 class _TContainerFormState extends State<TContainerForm> {
   TWidget? child;
-  double? height;
-  double? width;
   Color? color;
 
   final TextEditingController heightController = TextEditingController();
   final TextEditingController widthController = TextEditingController();
+
+  @override
+  initState() {
+    super.initState();
+
+    child = widget.oldState?.child;
+    heightController.text = widget.oldState?.height.toString() ?? '';
+    widthController.text = widget.oldState?.width.toString() ?? '';
+    color = widget.oldState?.color;
+  }
 
   @override
   Widget build(BuildContext context) {

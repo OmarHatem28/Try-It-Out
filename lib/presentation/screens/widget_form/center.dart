@@ -5,7 +5,9 @@ import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/models/widget_model/t_center.dart';
 
 class TCenterForm extends StatefulWidget {
-  const TCenterForm({Key? key}) : super(key: key);
+  final TCenter? oldState;
+
+  const TCenterForm(this.oldState, {Key? key}) : super(key: key);
 
   @override
   _TCenterFormState createState() => _TCenterFormState();
@@ -13,6 +15,13 @@ class TCenterForm extends StatefulWidget {
 
 class _TCenterFormState extends State<TCenterForm> {
   TWidget? child;
+
+  @override
+  initState() {
+    super.initState();
+
+    child = widget.oldState?.child;
+  }
 
   @override
   Widget build(BuildContext context) {

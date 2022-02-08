@@ -5,9 +5,7 @@ import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/models/widget_model/t_container.dart';
 
 class TContainerForm extends StatefulWidget {
-  final TWidget? parent;
-
-  const TContainerForm(this.parent, {Key? key}) : super(key: key);
+  const TContainerForm({Key? key}) : super(key: key);
 
   @override
   _TContainerFormState createState() => _TContainerFormState();
@@ -24,7 +22,6 @@ class _TContainerFormState extends State<TContainerForm> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: make scaffold with appbar const and just pass body and done action
     return Scaffold(
       appBar: AppBar(
         title: const Text(ConstStrings.container),
@@ -36,7 +33,6 @@ class _TContainerFormState extends State<TContainerForm> {
           TextButton(
             onPressed: () {
               TWidget result = TContainer(
-                parent: widget.parent,
                 color: color,
                 height: double.parse(heightController.text),
                 width: double.parse(widthController.text),
@@ -56,11 +52,18 @@ class _TContainerFormState extends State<TContainerForm> {
                 const Text("Child:"),
                 ElevatedButton(
                   onPressed: () async {
-                    var x = await Navigator.pushNamed(context, RouteGenerator.widgets);
+                    var x = await Navigator.pushNamed(
+                      context,
+                      RouteGenerator.widgets,
+                      arguments: {"parent": ConstStrings.container},
+                    );
 
-                    child = x as TWidget;
+                    if (x != null) {
+                      child = x as TWidget;
+                      setState(() {});
+                    }
                   },
-                  child: const Text("Container's Child"),
+                  child: Text(child?.name ?? "Container's Child"),
                 ),
               ],
             ),

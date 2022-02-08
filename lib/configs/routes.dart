@@ -54,13 +54,13 @@ class RouteGenerator {
       case container:
         return MaterialPageRoute(
           settings: const RouteSettings(name: container),
-          builder: (_) => TContainerForm(args['parent']),
+          builder: (_) => const TContainerForm(),
         );
 
       case center:
         return MaterialPageRoute(
           settings: const RouteSettings(name: center),
-          builder: (_) => TCenterForm(args['parent']),
+          builder: (_) => const TCenterForm(),
         );
 
       default:

@@ -33,10 +33,6 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
                   onPressed: () async {
                     var x = await Navigator.pushNamed(context, RouteGenerator.widgets);
 
-                    print("////////////////////");
-                    print(x);
-                    print(x.runtimeType);
-
                     tWidget = x as TWidget;
                     setState(() {});
                   },
@@ -66,9 +62,6 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
   }
 
   void getWidgets(TWidget? tWidget) {
-    print(tWidget);
-    print(tWidget.runtimeType);
-    print(tWidget?.toWidget());
     if (tWidget == null) return;
 
     children.add(widgetCard(tWidget.name));
@@ -111,7 +104,7 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
   Widget widgetCard(String name) {
     return ElevatedButton(
       onPressed: () {
-        print(name);
+        debugPrint(name);
       },
       child: Column(
         children: [

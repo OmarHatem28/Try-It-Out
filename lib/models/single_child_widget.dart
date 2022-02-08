@@ -6,6 +6,7 @@ abstract class SingleChildWidget extends TWidget {
   SingleChildWidget({
     this.child,
     required String name,
-    TWidget? parent,
-  }) : super(name: name, parent: parent);
+    required String icon,
+    required String route,
+  }) : super(name: name, icon: icon, route: route);
 }

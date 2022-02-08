@@ -5,9 +5,7 @@ import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/models/widget_model/t_center.dart';
 
 class TCenterForm extends StatefulWidget {
-  final TWidget? parent;
-
-  const TCenterForm(this.parent, {Key? key}) : super(key: key);
+  const TCenterForm({Key? key}) : super(key: key);
 
   @override
   _TCenterFormState createState() => _TCenterFormState();
@@ -31,7 +29,6 @@ class _TCenterFormState extends State<TCenterForm> {
             onPressed: () {
               if (child != null) {
                 TWidget result = TCenter(
-                  parent: widget.parent,
                   child: child!,
                 );
                 Navigator.pop(context, result);
@@ -50,15 +47,18 @@ class _TCenterFormState extends State<TCenterForm> {
                 const Text("Child (required):"),
                 ElevatedButton(
                   onPressed: () async {
-                    var x = await Navigator.pushNamed(context, RouteGenerator.widgets);
+                    var x = await Navigator.pushNamed(
+                      context,
+                      RouteGenerator.widgets,
+                      arguments: {"parent": ConstStrings.center},
+                    );
 
-                    print("////////////////////");
-                    print(x);
-                    print(x.runtimeType);
-
-                    child = x as TWidget;
+                    if (x != null) {
+                      child = x as TWidget;
+                      setState(() {});
+                    }
                   },
-                  child: const Text("Center's Child"),
+                  child: Text(child?.name ?? "Center's Child"),
                 ),
               ],
             ),

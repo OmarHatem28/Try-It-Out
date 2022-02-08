@@ -6,6 +6,7 @@ abstract class MultipleChildrenWidget extends TWidget {
   MultipleChildrenWidget({
     this.children,
     required String name,
-    TWidget? parent,
-  }) : super(name: name, parent: parent);
+    required String icon,
+    required String route,
+  }) : super(name: name, icon: icon, route: route);
 }

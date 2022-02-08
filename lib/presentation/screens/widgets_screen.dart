@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:try_it_out/configs/constants.dart';
-import 'package:try_it_out/models/t_widget.dart';
 
 class WidgetsScreen extends StatelessWidget {
-  final TWidget? parent;
+  final String? parent;
 
   const WidgetsScreen(this.parent, {Key? key}) : super(key: key);
 
@@ -12,7 +11,7 @@ class WidgetsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          parent?.name != null ? "${parent!.name}'s child" : "Starting Point",
+          parent != null ? "$parent's child" : "Starting Point",
         ),
         leading: TextButton(
           onPressed: () => Navigator.pop(context),

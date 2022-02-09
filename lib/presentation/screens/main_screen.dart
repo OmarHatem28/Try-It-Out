@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:try_it_out/configs/app_config.dart';
+import 'package:try_it_out/configs/constants.dart';
 import 'package:try_it_out/configs/routes.dart';
 import 'package:try_it_out/models/multiple_children_widget.dart';
 import 'package:try_it_out/models/single_child_widget.dart';
@@ -16,6 +17,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScreen> {
   TWidget? tWidget;
   List<Widget> children = [];
+
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -65,41 +68,97 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
     if (tWidget == null) return;
 
     children.add(widgetCard(tWidget));
-    children.add(const SizedBox(
-      height: 20,
-      child: VerticalDivider(thickness: 1),
-    ));
 
     if (tWidget is SingleChildWidget) {
+      children.add(const SizedBox(
+        height: 20,
+        child: VerticalDivider(thickness: 1),
+      ));
       return getWidgets(tWidget.child);
     }
     if (tWidget is MultipleChildrenWidget) {
-      if (tWidget.children?.isEmpty ?? true) return;
-      children.add(SingleChildScrollView(
+      if (tWidget.children.isEmpty) return;
+      children.add(const SizedBox(
+        height: 20,
+        child: VerticalDivider(thickness: 1),
+      ));
+      children.add(Padding(
+        padding: EdgeInsets.symmetric(horizontal: wp(15)),
+        child: const Divider(thickness: 1),
+      ));
+      children.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          SizedBox(
+            height: 20,
+            child: VerticalDivider(thickness: 1),
+          ),
+          SizedBox(
+            height: 20,
+            child: VerticalDivider(thickness: 1),
+          ),
+          SizedBox(
+            height: 20,
+            child: VerticalDivider(thickness: 1),
+          ),
+        ],
+      ));
+      children.add(
+        SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: tWidget.children!.map((e) => widgetCard(e)).toList())));
-      return getWidgets(tWidget.children!.first);
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: tWidget.children
+                .asMap()
+                .map((index, value) {
+                  return MapEntry(index, widgetCard(value, index: index));
+                })
+                .values
+                .toList(),
+          ),
+        ),
+      );
+      children.add(const SizedBox(
+        height: 20,
+        child: VerticalDivider(thickness: 1),
+      ));
+      if (tWidget.children[_selectedIndex] is SingleChildWidget) {
+        return getWidgets((tWidget.children[_selectedIndex] as SingleChildWidget).child);
+      }
+      if (tWidget.children[_selectedIndex] is MultipleChildrenWidget) {
+        if ((tWidget.children[_selectedIndex] as MultipleChildrenWidget).children.isEmpty) return;
+        return getWidgets((tWidget.children[_selectedIndex] as MultipleChildrenWidget).children.first);
+      }
+      return getWidgets(tWidget.children.first);
     }
   }
 
-  Widget widgetCard(TWidget tWidget) {
-    return ElevatedButton(
-      onPressed: () async {
-        debugPrint(tWidget.name);
-        var x = await Navigator.pushNamed(context, tWidget.route, arguments: {"oldState": tWidget});
+  Widget widgetCard(TWidget tWidget, {int index = -1}) {
+    bool selected = index == _selectedIndex;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: selected ? ConstColors.bluishGreen : ConstColors.primaryColor),
+        onPressed: () async {
+          debugPrint(tWidget.name);
+          if (selected || index == -1) {
+            var x = await Navigator.pushNamed(context, tWidget.route, arguments: {"oldState": tWidget});
 
-        if (x != null) {
-          print(x);
-          print(x.runtimeType);
-        }
-      },
-      child: Column(
-        children: [
-          const Icon(Icons.home),
-          Text(tWidget.name),
-        ],
+            if (x != null) {
+              print(x);
+              print(x.runtimeType);
+            }
+          } else {
+            _selectedIndex = index;
+            setState(() {});
+          }
+        },
+        child: Column(
+          children: [
+            const Icon(Icons.home),
+            Text(tWidget.name),
+          ],
+        ),
       ),
     );
   }

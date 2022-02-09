@@ -1,10 +1,10 @@
 import 't_widget.dart';
 
 abstract class MultipleChildrenWidget extends TWidget {
-  final List<TWidget>? children;
+  final List<TWidget> children;
 
   MultipleChildrenWidget({
-    this.children,
+    this.children = const [],
     required String name,
     required String icon,
     required String route,

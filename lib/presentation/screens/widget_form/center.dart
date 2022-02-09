@@ -36,13 +36,10 @@ class _TCenterFormState extends State<TCenterForm> {
         actions: [
           TextButton(
             onPressed: () {
-              if (child != null) {
-                TWidget result = TCenter(
-                  child: child!,
-                );
-                Navigator.pop(context, result);
-              }
-              // TODO: tell user to choose a child as it's required
+              TWidget result = TCenter(
+                child: child,
+              );
+              Navigator.pop(context, result);
             },
             child: const Text("Done"),
           ),

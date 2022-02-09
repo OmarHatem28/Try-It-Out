@@ -3,6 +3,7 @@ import 'package:try_it_out/presentation/screens/main_screen.dart';
 import 'package:try_it_out/presentation/screens/result_screen.dart';
 import 'package:try_it_out/presentation/screens/widget_form/center.dart';
 import 'package:try_it_out/presentation/screens/widget_form/container.dart';
+import 'package:try_it_out/presentation/screens/widget_form/row.dart';
 import 'package:try_it_out/presentation/screens/widgets_screen.dart';
 import 'package:try_it_out/services/shared_pref_manager.dart';
 
@@ -61,6 +62,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: center),
           builder: (_) => TCenterForm(args["oldState"]),
+        );
+
+      case row:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: row),
+          builder: (_) => TRowForm(args["oldState"]),
         );
 
       default:

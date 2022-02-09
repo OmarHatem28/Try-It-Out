@@ -11,26 +11,31 @@ import 'package:try_it_out/services/error_handling/failure.dart';
 import 'package:try_it_out/services/shared_pref_manager.dart';
 
 void main() async {
-  await runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  // await runZonedGuarded(() async {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //
+  //   FlutterError.onError = FlutterFailure.onError;
+  //
+  //   Isolate.current.addErrorListener(RawReceivePort((pair) async {
+  //     final List<dynamic> errorAndStacktrace = pair;
+  //     handleException(
+  //       exception: errorAndStacktrace.first,
+  //       stackTrace: errorAndStacktrace.last,
+  //       logger: AppConfig.failureLogger,
+  //     );
+  //   }).sendPort);
+  //
+  //   await SharedPrefManager.initialize();
+  //
+  //   runApp(const MyApp());
+  // }, (exception, stackTrace) {
+  //   handleException(exception: exception, stackTrace: stackTrace, logger: AppConfig.failureLogger);
+  // });
+  WidgetsFlutterBinding.ensureInitialized();
 
-    FlutterError.onError = FlutterFailure.onError;
+  await SharedPrefManager.initialize();
 
-    Isolate.current.addErrorListener(RawReceivePort((pair) async {
-      final List<dynamic> errorAndStacktrace = pair;
-      handleException(
-        exception: errorAndStacktrace.first,
-        stackTrace: errorAndStacktrace.last,
-        logger: AppConfig.failureLogger,
-      );
-    }).sendPort);
-
-    await SharedPrefManager.initialize();
-
-    runApp(const MyApp());
-  }, (exception, stackTrace) {
-    handleException(exception: exception, stackTrace: stackTrace, logger: AppConfig.failureLogger);
-  });
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

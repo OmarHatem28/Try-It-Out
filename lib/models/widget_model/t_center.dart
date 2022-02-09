@@ -6,7 +6,7 @@ import 'package:try_it_out/models/t_widget.dart';
 
 class TCenter extends SingleChildWidget {
   TCenter({
-    required TWidget child,
+    TWidget? child,
   }) : super(
     name: ConstStrings.center,
     icon: ConstAssets.center,
@@ -16,6 +16,6 @@ class TCenter extends SingleChildWidget {
 
   @override
   Widget toWidget() => Center(
-    child: child!.toWidget(),
+    child: child?.toWidget(),
   );
 }

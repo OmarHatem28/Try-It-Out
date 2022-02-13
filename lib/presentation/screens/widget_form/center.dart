@@ -38,7 +38,9 @@ class _TCenterFormState extends State<TCenterForm> {
             onPressed: () {
               TWidget result = TCenter(
                 child: child,
+                parent: widget.oldState?.parent,
               );
+              child?.parent = result;
               Navigator.pop(context, result);
             },
             child: const Text("Done"),

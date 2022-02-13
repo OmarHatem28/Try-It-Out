@@ -28,7 +28,7 @@ class _TRowFormState extends State<TRowForm> with AppStatefulWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ConstStrings.center),
+        title: const Text(ConstStrings.row),
         leading: TextButton(
           onPressed: () => Navigator.pop(context),
           child: const Text("Cancel"),
@@ -39,7 +39,9 @@ class _TRowFormState extends State<TRowForm> with AppStatefulWidget {
               TWidget result = TRow(
                 children: children,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                parent: widget.oldState?.parent,
               );
+              children.forEach((element) => element.parent = result);
               Navigator.pop(context, result);
             },
             child: const Text("Done"),

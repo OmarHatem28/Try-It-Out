@@ -47,7 +47,9 @@ class _TContainerFormState extends State<TContainerForm> {
                 height: double.parse(heightController.text),
                 width: double.parse(widthController.text),
                 child: child,
+                parent: widget.oldState?.parent,
               );
+              child?.parent = result;
               Navigator.pop(context, result);
             },
             child: const Text("Done"),

@@ -9,12 +9,14 @@ class TRow extends MultipleChildrenWidget {
 
   TRow({
     List<TWidget> children = const [],
+    TWidget? parent,
     this.mainAxisAlignment,
   }) : super(
     name: ConstStrings.row,
     icon: ConstAssets.row,
     route: RouteGenerator.row,
     children: children,
+    parent: parent,
   );
 
   @override

@@ -11,13 +11,6 @@ double hp(double percentage, BuildContext context) {
   return percentage * MediaQuery.of(context).size.height / 100.0;
 }
 
-String formatErrorMessage(Map? errors) {
-  String formattedError = "";
-  errors?.keys.forEach((key) => (errors[key] as List).forEach((element) => formattedError += "* $element\n"));
-  formattedError = formattedError.substring(0, formattedError.length - 1);
-  return formattedError;
-}
-
 void handleException<T>({
   required exception,
   required Logger logger,

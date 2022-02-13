@@ -14,11 +14,13 @@ class TContainer extends SingleChildWidget {
     this.width,
     this.height,
     TWidget? child,
+    TWidget? parent,
   }) : super(
-          name: ConstStrings.container,
+    name: ConstStrings.container,
           icon: ConstAssets.container,
           route: RouteGenerator.container,
           child: child,
+          parent: parent,
         );
 
   @override

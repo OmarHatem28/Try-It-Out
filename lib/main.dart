@@ -70,6 +70,7 @@ class MyApp extends StatelessWidget {
         primary: Colors.black,
       ),
     ),
+    backgroundColor: const Color(0xffebebeb),
     primaryColor: ConstColors.primaryColor,
     textTheme: const TextTheme(
       headline6: TextStyle(color: ConstColors.darkGrey, fontSize: 20, fontWeight: FontWeight.w900),

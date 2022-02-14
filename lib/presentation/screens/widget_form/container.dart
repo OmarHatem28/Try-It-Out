@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:try_it_out/configs/constants.dart';
 import 'package:try_it_out/configs/routes.dart';
 import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/models/widget_model/t_container.dart';
+import 'package:try_it_out/presentation/mixins/app_stateful_widget.dart';
+import 'package:try_it_out/presentation/widgets/appbar.dart';
+import 'package:try_it_out/presentation/widgets/t_neumorphic_text.dart';
 
 class TContainerForm extends StatefulWidget {
   final TContainer? oldState;
@@ -13,7 +17,7 @@ class TContainerForm extends StatefulWidget {
   _TContainerFormState createState() => _TContainerFormState();
 }
 
-class _TContainerFormState extends State<TContainerForm> {
+class _TContainerFormState extends State<TContainerForm> with AppStatefulWidget {
   TWidget? child;
   Color? color;
 
@@ -33,14 +37,14 @@ class _TContainerFormState extends State<TContainerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(ConstStrings.container),
-        leading: TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
-        ),
+      backgroundColor: themeData.backgroundColor,
+      appBar: TAppbar(
+        title: const TNeumorphicText(ConstStrings.container),
+        parentContext: context,
         actions: [
-          TextButton(
+          NeumorphicButton(
+            tooltip: "Done",
+            padding: const EdgeInsets.all(8.0),
             onPressed: () {
               TWidget result = TContainer(
                 color: color,
@@ -52,7 +56,14 @@ class _TContainerFormState extends State<TContainerForm> {
               child?.parent = result;
               Navigator.pop(context, result);
             },
-            child: const Text("Done"),
+            child: const Icon(Icons.done),
+            style: const NeumorphicStyle(
+              shape: NeumorphicShape.concave,
+              boxShape: NeumorphicBoxShape.circle(),
+              depth: 4,
+              lightSource: LightSource.topLeft,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

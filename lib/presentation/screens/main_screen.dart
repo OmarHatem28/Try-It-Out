@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:try_it_out/configs/app_config.dart';
 import 'package:try_it_out/configs/constants.dart';
 import 'package:try_it_out/configs/routes.dart';
@@ -6,6 +8,7 @@ import 'package:try_it_out/models/multiple_children_widget.dart';
 import 'package:try_it_out/models/single_child_widget.dart';
 import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/presentation/mixins/app_stateful_widget.dart';
+import 'package:try_it_out/presentation/widgets/t_neumorphic_text.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -23,28 +26,61 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
     return SafeArea(
       child: Scaffold(
         backgroundColor: themeData.backgroundColor,
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                const Text(
-                  AppConfig.appName,
-                  style: TextStyle(fontSize: 20),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    var x = await Navigator.pushNamed(context, RouteGenerator.widgets);
+        body: rootWidget == null
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const TNeumorphicText(
+                      AppConfig.appName,
+                      fontSize: 60,
+                    ),
+                    SizedBox(height: hp(2)),
+                    NeumorphicButton(
+                      margin: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(20),
+                      style: NeumorphicStyle(
+                        shape: NeumorphicShape.concave,
+                        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(ConstValues.borderRadius)),
+                        depth: 4,
+                        lightSource: LightSource.topLeft,
+                        color: Colors.lightGreenAccent,
+                        oppositeShadowLightSource: true,
+                        shadowDarkColor: ConstColors.darkGrey,
+                      ),
+                      onPressed: () async {
+                        var x = await Navigator.pushNamed(context, RouteGenerator.widgets);
 
-                    rootWidget = x as TWidget;
-                    setState(() {});
-                  },
-                  child: const Text("Build your design"),
+                        rootWidget = x as TWidget;
+                        setState(() {});
+                      },
+                      child: const Text("Build your design"),
+                    ),
+                  ],
                 ),
-                SizedBox(height: hp(5)),
-                drawWidgetTree(),
-              ],
-            ),
-          ),
+              )
+            : SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      const Text(
+                        AppConfig.appName,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          var x = await Navigator.pushNamed(context, RouteGenerator.widgets);
+
+                          rootWidget = x as TWidget;
+                          setState(() {});
+                        },
+                        child: const Text("Build your design"),
+                      ),
+                      SizedBox(height: hp(5)),
+                      drawWidgetTree(),
+                    ],
+                  ),
+                ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: rootWidget != null ? () {
@@ -69,7 +105,7 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
     if (!first) {
       children.add(const SizedBox(
         height: 20,
-        child: VerticalDivider(thickness: 1),
+        child: VerticalDivider(thickness: 2),
       ));
     }
     children.add(widgetCard(tWidget));
@@ -86,26 +122,26 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
     if (tWidget.children.isEmpty) return;
     children.add(const SizedBox(
       height: 20,
-      child: VerticalDivider(thickness: 1),
+      child: VerticalDivider(thickness: 2),
     ));
     children.add(Padding(
       padding: EdgeInsets.symmetric(horizontal: wp(15)),
-      child: const Divider(thickness: 1),
+      child: const Divider(thickness: 2),
     ));
     children.add(Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: const [
         SizedBox(
           height: 20,
-          child: VerticalDivider(thickness: 1),
+          child: VerticalDivider(thickness: 2),
         ),
         SizedBox(
           height: 20,
-          child: VerticalDivider(thickness: 1),
+          child: VerticalDivider(thickness: 2),
         ),
         SizedBox(
           height: 20,
-          child: VerticalDivider(thickness: 1),
+          child: VerticalDivider(thickness: 2),
         ),
       ],
     ));
@@ -135,15 +171,12 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
 
   Widget widgetCard(TWidget tWidget, {int? index}) {
     bool selected = index != null && (tWidget.parent as MultipleChildrenWidget?)?.selectedChildIndex == index;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: selected ? ConstColors.bluishGreen : ConstColors.primaryColor),
+    return SizedBox(
+      height: 100,
+      width: 100,
+      child: NeumorphicButton(
+        margin: const EdgeInsets.all(8.0),
         onPressed: () async {
-          print(index);
-          print(tWidget);
-          print(tWidget.name);
-          print(tWidget.parent);
           if (selected || index == null) {
             var modifiedWidget = await Navigator.pushNamed(context, tWidget.route, arguments: {"oldState": tWidget});
 
@@ -167,10 +200,29 @@ class _MainScreenState extends State<MainScreen> with AppStatefulWidget<MainScre
           }
           setState(() {});
         },
+        style: NeumorphicStyle(
+          shape: NeumorphicShape.concave,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(ConstValues.borderRadius)),
+          depth: 4,
+          lightSource: LightSource.topLeft,
+          color: selected ? Colors.greenAccent : Colors.white,
+          oppositeShadowLightSource: true,
+          shadowDarkColor: ConstColors.darkGrey,
+        ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.home),
-            Text(tWidget.name),
+            AspectRatio(
+              aspectRatio: 2,
+              child: SvgPicture.asset(
+                tWidget.icon,
+                color: Colors.black45,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(tWidget.name),
+            ),
           ],
         ),
       ),

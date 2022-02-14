@@ -15,7 +15,7 @@ class ConstColors {
 }
 
 class ConstValues {
-  static const double elevation = 2;
+  static const double elevation = 10;
   static const double borderRadius = 12;
   static const double bigBorderRadius = 16;
 
@@ -49,11 +49,11 @@ class ConstValues {
 }
 
 class ConstAssets {
-  static const String container = "container.svg";
-  static const String row = "row.svg";
-  static const String column = "column.svg";
-  static const String center = "center.svg";
-  static const String stack = "stack.svg";
+  static const String container = "assets/icons/widgets_icons/container.svg";
+  static const String row = "assets/icons/widgets_icons/row.svg";
+  static const String column = "assets/icons/widgets_icons/column.svg";
+  static const String center = "assets/icons/widgets_icons/center.svg";
+  static const String stack = "assets/icons/widgets_icons/stack.svg";
 }
 
 class ConstStrings {

@@ -3,6 +3,7 @@ import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:try_it_out/configs/app_config.dart';
 import 'package:try_it_out/configs/constants.dart';
 import 'package:try_it_out/configs/routes.dart';
@@ -47,11 +48,13 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
-      title: AppConfig.appName,
-      debugShowCheckedModeBanner: false,
-      theme: _appTheme(),
-      onGenerateRoute: RouteGenerator.generateRoute,
+    return NeumorphicTheme(
+      child: MaterialApp(
+        title: AppConfig.appName,
+        debugShowCheckedModeBanner: false,
+        theme: _appTheme(),
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
     );
   }
 

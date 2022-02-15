@@ -8,10 +8,10 @@ class WidgetCard extends StatelessWidget {
   final TWidget tWidget;
 
   final Function()? onPressed;
-  final double? aspectRation;
+  final double? aspectRatio;
   final EdgeInsets? textPadding;
 
-  const WidgetCard({Key? key,required this.tWidget, this.onPressed, this.aspectRation, this.textPadding}) : super(key: key);
+  const WidgetCard(this.tWidget, {Key? key, this.onPressed, this.aspectRatio, this.textPadding}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class WidgetCard extends StatelessWidget {
         children: [
           Expanded(
             child: AspectRatio(
-              aspectRatio: 0.5,
+              aspectRatio: aspectRatio ?? 0.5,
               child: SvgPicture.asset(
                 tWidget.icon,
                 color: Colors.black45,
@@ -40,7 +40,7 @@ class WidgetCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: textPadding ?? const EdgeInsets.symmetric(vertical: 8),
+            padding: textPadding ?? const EdgeInsets.symmetric(vertical: 4),
             child: Text(tWidget.name),
           ),
         ],

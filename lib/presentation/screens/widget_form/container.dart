@@ -6,7 +6,10 @@ import 'package:try_it_out/models/t_widget.dart';
 import 'package:try_it_out/models/widget_model/t_container.dart';
 import 'package:try_it_out/presentation/mixins/app_stateful_widget.dart';
 import 'package:try_it_out/presentation/widgets/appbar.dart';
+import 'package:try_it_out/presentation/widgets/input_field.dart';
 import 'package:try_it_out/presentation/widgets/t_neumorphic_text.dart';
+import 'package:try_it_out/presentation/widgets/widget_attributes/attribute_field.dart';
+import 'package:try_it_out/presentation/widgets/widget_attributes/color_picker_button.dart';
 
 class TContainerForm extends StatefulWidget {
   final TContainer? oldState;
@@ -45,17 +48,7 @@ class _TContainerFormState extends State<TContainerForm> with AppStatefulWidget 
           NeumorphicButton(
             tooltip: "Done",
             padding: const EdgeInsets.all(8.0),
-            onPressed: () {
-              TWidget result = TContainer(
-                color: color,
-                height: double.parse(heightController.text),
-                width: double.parse(widthController.text),
-                child: child,
-                parent: widget.oldState?.parent,
-              );
-              child?.parent = result;
-              Navigator.pop(context, result);
-            },
+            onPressed: addContainer,
             child: const Icon(Icons.done),
             style: const NeumorphicStyle(
               shape: NeumorphicShape.concave,
@@ -68,12 +61,14 @@ class _TContainerFormState extends State<TContainerForm> with AppStatefulWidget 
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Text("Child:"),
-                ElevatedButton(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              AttributeField(
+                title: "Child",
+                child: NeumorphicButton(
+                  padding: const EdgeInsets.all(8.0),
                   onPressed: () async {
                     var x = await Navigator.pushNamed(
                       context,
@@ -86,62 +81,52 @@ class _TContainerFormState extends State<TContainerForm> with AppStatefulWidget 
                       setState(() {});
                     }
                   },
-                  child: Text(child?.name ?? "Container's Child"),
+                  child: Text(child?.name ?? "${ConstStrings.container}'s Child"),
+                  style: NeumorphicStyle(
+                    shape: NeumorphicShape.concave,
+                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(ConstValues.borderRadius)),
+                    depth: 4,
+                    lightSource: LightSource.topLeft,
+                    color: Colors.white,
+                  ),
                 ),
-              ],
-            ),
-            TextFormField(
-              controller: heightController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Height",
               ),
-            ),
-            TextFormField(
-              controller: widthController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Width",
+              AttributeField(
+                title: "Height",
+                child: InputField(
+                  context,
+                  controller: heightController,
+                  textInputType: TextInputType.number,
+                ),
               ),
-            ),
-            Row(
-              children: [
-                const Text("color:"),
-                ElevatedButton(
-                  onPressed: () {
-                    color = Colors.red;
-                  },
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    color: Colors.red,
-                  ),
+              AttributeField(
+                title: "Width",
+                child: InputField(
+                  context,
+                  controller: widthController,
+                  textInputType: TextInputType.number,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    color = Colors.blue;
-                  },
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    color: Colors.blue,
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    color = Colors.green;
-                  },
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+              const AttributeField(
+                title: "Color",
+                child: ColorPickerButton(),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void addContainer() {
+    TWidget result = TContainer(
+      color: color,
+      height: double.tryParse(heightController.text),
+      width: double.tryParse(widthController.text),
+      child: child,
+      parent: widget.oldState?.parent,
+    );
+    child?.parent = result;
+    Navigator.pop(context, result);
   }
 }

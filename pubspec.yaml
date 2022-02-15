@@ -41,6 +41,9 @@ dependencies:
   introduction_screen: ^2.1.0
   # For Neumorphic effect
   flutter_neumorphic: ^3.2.0
+  # For color picker
+  flutter_colorpicker: ^1.0.3
+
 
   #------------------------------------------------------
   ### Coding

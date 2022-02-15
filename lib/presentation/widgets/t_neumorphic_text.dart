@@ -13,7 +13,7 @@ class TNeumorphicText extends StatelessWidget {
       text,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: fontSize ?? 35,
+        fontSize: fontSize ?? 30,
         shadows: [
           const Shadow(offset: Offset(3, 3), color: Colors.black54, blurRadius: 10),
           Shadow(offset: const Offset(-3, -3), color: Colors.white.withOpacity(0.85), blurRadius: 10),

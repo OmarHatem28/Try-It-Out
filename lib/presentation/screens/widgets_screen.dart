@@ -18,10 +18,7 @@ class WidgetsScreen extends StatelessWidget with AppStatelessWidget {
     return Scaffold(
       backgroundColor: themeData.backgroundColor,
       appBar: TAppbar(
-        title: TNeumorphicText(
-          parent != null ? "$parent's child" : "Starting Point",
-          fontSize: 30,
-        ),
+        title: TNeumorphicText(parent != null ? "$parent's child" : "Starting Point"),
         parentContext: context,
       ),
       body: GridView.builder(
